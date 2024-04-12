@@ -1,3 +1,6 @@
+# "literal_eval" is a more secure alternative to eval that fits my needs.
+from ast import literal_eval
+
 # Creates a dictionary for adding the dataset in.
 # This is how the formating will end up:
 # 
@@ -13,11 +16,11 @@ with open("HKS2023.csv", "r") as inputFile:
     tempList = inputFile.readlines()
 
     # Creates the first row's items as keys connected to empty lists in the "datasetDict" dictionary.
-    for item in tempList[0].split(","):
-        datasetDict[item.replace('"', "")] = []
+    for item in literal_eval(f"[{tempList[0]}]"):
+        datasetDict[item] = []
 
     # Appends the items in the other rows to their respective key.
     for row in tempList[1:]:
-        for i in range(len(row.split(","))-1):
-            datasetDict[list(datasetDict.keys())[i]].append(row.split(",")[i].replace('"', ""))
-
+        row = literal_eval(f"[{row}]")
+        for i in range(len(literal_eval(f"[{tempList[0]}]"))-1):
+            datasetDict[list(datasetDict.keys())[i]].append(row[i])
