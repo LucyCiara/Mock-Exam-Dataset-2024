@@ -24,3 +24,14 @@ with open("HKS2023.csv", "r") as inputFile:
         row = literal_eval(f"[{row}]")
         for i in range(len(literal_eval(f"[{tempList[0]}]"))-1):
             datasetDict[list(datasetDict.keys())[i]].append(row[i])
+
+# Sorting by number
+tempList = sorted(datasetDict["Bib"], reverse=True)
+print(tempList[:3])
+
+# Collecting all the non-binary people(?)
+nonBinaryPeeps = []
+for i in range(len(datasetDict["Gender"])):
+    if datasetDict["Gender"][i] == "N":
+        nonBinaryPeeps.append(datasetDict["Firstname"][i])
+print(nonBinaryPeeps)
